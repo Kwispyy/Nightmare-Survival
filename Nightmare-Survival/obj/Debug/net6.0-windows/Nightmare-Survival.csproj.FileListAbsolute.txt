@@ -35,3 +35,7 @@ C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug\net6.0-windows\Nightmare-Survival.pdb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug\net6.0-windows\Nightmare-Survival.genruntimeconfig.cache
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug\net6.0-windows\ref\Nightmare-Survival.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\2D\char\player.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\1.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug\net6.0-windows\Nightmare-Survival.g.resources
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\player.xnb
