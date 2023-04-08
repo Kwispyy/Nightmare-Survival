@@ -39,3 +39,9 @@ C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\1.xnb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\obj\Debug\net6.0-windows\Nightmare-Survival.g.resources
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\player.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Autofac.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.Animations.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.Graphics.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.Tiled.dll
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Newtonsoft.Json.dll

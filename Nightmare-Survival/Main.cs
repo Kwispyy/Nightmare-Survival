@@ -18,6 +18,15 @@ namespace Nightmare_Survival
         float speed = 10;
         byte fullscreenMode;
 
+        float timer;
+        int threshold;
+        Rectangle[] sourceRectangles;
+        byte prevAnimIndex;
+        byte curAnimIndex;
+
+
+
+
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -50,19 +59,60 @@ namespace Nightmare_Survival
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
 
-            // TODO: use this.Content to load your game content here
+            timer = 0;
+            threshold = 250;
+            sourceRectangles = new Rectangle[8];
+            sourceRectangles[0] = new Rectangle(0, 0, 32, 44);
+            sourceRectangles[1] = new Rectangle(32, 0, 32, 44);
+            sourceRectangles[2] = new Rectangle(64, 0, 32, 44);
+            sourceRectangles[3] = new Rectangle(96, 0, 32, 44);
+            sourceRectangles[4] = new Rectangle(128, 0, 32, 44);
+            sourceRectangles[5] = new Rectangle(160, 0, 32, 44);
+            sourceRectangles[6] = new Rectangle(192, 0, 32, 44);
+            sourceRectangles[7] = new Rectangle(224, 0, 32, 44);
+
+            prevAnimIndex = 0;
+            curAnimIndex = 0;
+
         }
-
-
-        double timer = 0;
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (timer > threshold)
+            {
+                // If Alex is in the middle sprite of the animation.
+                if (curAnimIndex == 1)
+                {
+                    // If the previous animation was the left-side sprite, then the next animation should be the right-side sprite.
+                    if (prevAnimIndex == 0)
+                    {
+                        curAnimIndex = 6;
+                    }
+                    else
+                    // If not, then the next animation should be the left-side sprite.
+                    {
+                        curAnimIndex = 4;
+                    }
+                    // Track the animation.
+                    prevAnimIndex = curAnimIndex;
+                }
+                // If Alex was not in the middle sprite of the animation, he should return to the middle sprite.
+                else
+                {
+                    curAnimIndex = 1;
+                }
+                // Reset the timer.
+                timer = 0;
+            }
+            // If the timer has not reached the threshold, then add the milliseconds that have past since the last Update() to the timer.
+            else
+            {
+                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
 
 
             // Changing the resolution in the game + !do fullscreen / windowerd option
@@ -115,13 +165,13 @@ namespace Nightmare_Survival
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 position.Y += speed;
-                if (position.Y > Window.ClientBounds.Height)
+                if (position.Y + player.Height > Window.ClientBounds.Height)
                     position.Y = Window.ClientBounds.Height;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 position.X += speed;
-                if (position.X > Window.ClientBounds.Width)
+                if (position.X + player.Width > Window.ClientBounds.Width)
                     position.X = Window.ClientBounds.Width;
             }
             // TODO: Add your update logic here
@@ -132,11 +182,13 @@ namespace Nightmare_Survival
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(player, position, Color.White);
-            
+            _spriteBatch.Draw(player, position, sourceRectangles[curAnimIndex],
+                Color.White, 0, Vector2.Zero,
+                2, SpriteEffects.None, 0);
+
+
             _spriteBatch.End();
             // TODO: Add your drawing code here
 
