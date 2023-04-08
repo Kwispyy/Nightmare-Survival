@@ -4,9 +4,11 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/player.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/idlePlayer.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/mainMelody.mp3</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

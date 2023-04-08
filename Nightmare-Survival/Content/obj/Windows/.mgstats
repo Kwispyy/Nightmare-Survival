@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/idlePlayer.png","C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/bin/Windows/idlePlayer.xnb","TextureProcessor","Texture2DContent",3328,194645,0,2219759
+"C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/mainMelody.mp3","C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/bin/Windows/mainMelody.xnb","SongProcessor","SongContent",9508616,128,2,477371
