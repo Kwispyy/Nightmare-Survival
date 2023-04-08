@@ -4,9 +4,8 @@
     {
         readonly ushort[] widths;
         readonly ushort[] heights;
-        private readonly GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        byte fullscreenMode;
         public GameManager _gameManager;
 
         SoundEffect songWav;
@@ -14,12 +13,9 @@
 
         public GameClass()
         {
-
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             widths = new ushort[] { 1920, 1366, 1280, 1280 };
             heights = new ushort[] { 1080, 768, 1024, 720 };
-
-
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -28,9 +24,9 @@
         {
             if(newResolution >= 0 && newResolution < widths.Length)
             {
-                graphics.PreferredBackBufferWidth = widths[newResolution];
-                graphics.PreferredBackBufferHeight = heights[newResolution];
-                graphics.ApplyChanges();
+                _graphics.PreferredBackBufferWidth = widths[newResolution];
+                _graphics.PreferredBackBufferHeight = heights[newResolution];
+                _graphics.ApplyChanges();
             }
         }
 
@@ -67,30 +63,26 @@
             Globals.Update(gameTime);
             _gameManager.Update();
 
+            //Everything about screen resolution
+            #region
             // Changing the resolution in the game + !do fullscreen / windowerd option
             #region 
             Keys[] FunctionKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4 };
 
             //Change between Fullscreen & windowed
             #region
-            //fullscreenMode = 0;
 
-            //if (Keyboard.GetState().IsKeyDown(Keys.F12))
-            //{
-            //    switch (fullscreenMode)
-            //    {
-            //        case 0:
-            //            _graphics.IsFullScreen = true;
-            //            _graphics.ApplyChanges();
-            //            fullscreenMode = 1;
-            //            break;
-            //        case 1:
-            //            _graphics.IsFullScreen = false;
-            //            _graphics.ApplyChanges();
-            //            fullscreenMode = 0;
-            //            break;
-            //    }
-            //}
+            if (Keyboard.GetState().IsKeyDown(Keys.F12))
+            {
+                _graphics.IsFullScreen = true;
+                _graphics.ApplyChanges();
+            }
+
+            else if (Keyboard.GetState().IsKeyDown(Keys.F11))
+            {
+                _graphics.IsFullScreen = false;
+                _graphics.ApplyChanges();
+            }
             #endregion
 
             for (byte i = 0; i < FunctionKeys.Length; i++)
@@ -101,7 +93,7 @@
                 }
             }
             #endregion
-
+            #endregion
             ////Player control (old ver.)
             #region
             //if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -140,7 +132,7 @@
             //        }
             //    }
             //}
-            
+
 
             //if (Keyboard.GetState().IsKeyDown(Keys.D))
             //{
@@ -157,7 +149,7 @@
             //        {
             //            position.Y -= 1;
             //        }
-                    
+
             //    }
             //}
 
@@ -176,7 +168,7 @@
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Beige);
+            GraphicsDevice.Clear(Color.WhiteSmoke);
 
             _spriteBatch.Begin();
             _gameManager.Draw();

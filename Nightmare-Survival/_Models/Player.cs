@@ -3,7 +3,7 @@
     public class Player
     {
         private Vector2 _position = new(100, 100);
-        private readonly float _speed = 200f;
+        private readonly float _speed = 70f;
         private readonly AnimationManager _animations = new();
 
         public Player()

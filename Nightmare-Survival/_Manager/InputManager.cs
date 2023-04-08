@@ -6,7 +6,6 @@
         public static Vector2 Direction => _direction;
         public static bool Moving => _direction != Vector2.Zero;
 
-
         public static void Update()
         {
             _direction = Vector2.Zero;
