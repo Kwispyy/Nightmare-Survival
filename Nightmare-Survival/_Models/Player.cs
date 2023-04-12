@@ -8,7 +8,7 @@
 
         public Player()
         {
-            var playerTexture = Globals.ContentManager.Load<Texture2D>("idlePlayer");
+            var playerTexture = Globals.ContentManager.Load<Texture2D>("Sprites/Player/idlePlayer");
 
             _animations.AddAnimation(new Vector2(-1, 0), new(playerTexture, 8, 4, 0.1f, 1));
             _animations.AddAnimation(new Vector2(0, 1), new(playerTexture, 8, 4, 0.1f, 2));

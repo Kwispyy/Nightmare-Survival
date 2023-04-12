@@ -13,7 +13,7 @@ namespace Nightmare_Survival
             _tiles = new Sprite[_mapTileSize.X, _mapTileSize.Y];
 
             List<Texture2D> textures = new(5);
-            for (int i = 1; i < 6; i++) textures.Add(Globals.ContentManager.Load<Texture2D>($"tile{i}"));
+            for (int i = 1; i < 6; i++) textures.Add(Globals.ContentManager.Load<Texture2D>($"Tiles/tile{i}"));
 
             TileSize = new(textures[0].Width, textures[0].Height);
             MapSize = new(TileSize.X * _mapTileSize.X, TileSize.Y * _mapTileSize.Y);

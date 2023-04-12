@@ -8,7 +8,7 @@
 
         public Killer()
         {
-            var killerTexture = Globals.ContentManager.Load<Texture2D>("Killer");
+            var killerTexture = Globals.ContentManager.Load<Texture2D>("Sprites/Killer/Killer");
 
             _animations.AddAnimation(new Vector2(-1, 0), new(killerTexture, 11, 1, 0.1f, 4));
             _animations.AddAnimation(new Vector2(0, 1), new(killerTexture, 11, 1, 0.1f, 2));

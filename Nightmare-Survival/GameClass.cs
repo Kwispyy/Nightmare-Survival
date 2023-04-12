@@ -44,7 +44,7 @@
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.SpriteBatch = _spriteBatch;
 
-            song = Content.Load<Song>("mainMelody");
+            song = Content.Load<Song>("Sounds/mainMelody");
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;

@@ -43,12 +43,13 @@ C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.Graphics.dll
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\MonoGame.Extended.Tiled.dll
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\mainMelody.wma
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\mainMelody.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\idlePlayer.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Killer.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\tile1.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\tile2.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\tile3.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\tile4.xnb
-C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\tile5.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sounds\mainMelody.wma
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sounds\mainMelody.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Killer\Skeleton enemy.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Player\idlePlayer.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile1.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile2.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile3.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile4.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile5.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Killer\Killer.xnb
