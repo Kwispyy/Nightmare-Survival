@@ -53,3 +53,4 @@ C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile4.xnb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\tile5.xnb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Killer\Killer.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Player\runPlayer.xnb

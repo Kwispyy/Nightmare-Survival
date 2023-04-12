@@ -12,6 +12,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\CppNet.dll" />
+    <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\libmojoshader_64.dll" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\mgfxc.deps.json" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\mgfxc.dll" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\mgfxc.exe" />
@@ -22,6 +24,8 @@
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\SharpDX.D3DCompiler.xml" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\SharpDX.dll" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended.content.pipeline\3.8.0\contentFiles\any\netcoreapp3.1\SharpDX.xml" />
+    <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended\3.8.0\contentFiles\any\netstandard2.0\CppNet.dll" />
+    <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended\3.8.0\contentFiles\any\netstandard2.0\libmojoshader_64.dll" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended\3.8.0\contentFiles\any\netstandard2.0\mgfxc.deps.json" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended\3.8.0\contentFiles\any\netstandard2.0\mgfxc.dll" />
     <Content Remove="C:\Users\Kwispy\.nuget\packages\monogame.extended\3.8.0\contentFiles\any\netstandard2.0\mgfxc.exe" />
@@ -43,6 +47,9 @@
     <PackageReference Include="MonoGame.Extended.Graphics" Version="3.8.0" />
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Map\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

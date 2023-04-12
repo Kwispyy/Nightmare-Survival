@@ -6,3 +6,6 @@ global using Microsoft.Xna.Framework.Media;
 global using MonoGame.Extended.Sprites;
 global using System.Collections.Generic;
 global using System;
+global using Microsoft.Xna.Framework.Content;
+global using SharpDX.Direct2D1.Effects;
+global using System.IO;

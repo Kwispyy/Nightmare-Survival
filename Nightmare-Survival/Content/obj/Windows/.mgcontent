@@ -7,6 +7,7 @@
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sounds/mainMelody.mp3</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Killer/Skeleton enemy.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/idlePlayer.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/runPlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile1.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile2.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile3.png</File>
@@ -16,6 +17,7 @@
   <DestFiles>
     <File xsi:nil="true" />
     <File>Sprites/Killer/Killer.png</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
