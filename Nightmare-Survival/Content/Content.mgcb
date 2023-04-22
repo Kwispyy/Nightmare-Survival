@@ -41,7 +41,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Player/idlePlayer.png
+/build:Sprites/Player/idlePlayer.png;Sprites/Player/Idle.png
 
 #begin Sprites/Player/runPlayer.png
 /importer:TextureImporter
@@ -53,7 +53,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Player/runPlayer.png
+/build:Sprites/Player/runPlayer.png;Sprites/Player/Run.png
+
+#begin Tiles/bed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/bed.png
 
 #begin Tiles/tile1.png
 /importer:TextureImporter
@@ -65,7 +77,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tile1.png
+/build:Tiles/tile1.png;Tiles/tile0.png
 
 #begin Tiles/tile2.png
 /importer:TextureImporter
@@ -77,7 +89,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tile2.png
+/build:Tiles/tile2.png;Tiles/tile1.png
 
 #begin Tiles/tile3.png
 /importer:TextureImporter
@@ -89,7 +101,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tile3.png
+/build:Tiles/tile3.png;Tiles/tile2.png
 
 #begin Tiles/tile4.png
 /importer:TextureImporter
@@ -101,7 +113,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tile4.png
+/build:Tiles/tile4.png;Tiles/tile3.png
 
 #begin Tiles/tile5.png
 /importer:TextureImporter
@@ -113,5 +125,17 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles/tile5.png
+/build:Tiles/tile5.png;Tiles/tile4.png
+
+#begin Tiles/wall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/wall.png
 

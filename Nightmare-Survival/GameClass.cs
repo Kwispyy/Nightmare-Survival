@@ -2,18 +2,30 @@
 {
     public class GameClass : Game
     {
-        readonly ushort[] widths;
-        readonly ushort[] heights;
+        //For drawing
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        //public GameManager gameManager;
-        readonly SoundEffect songWav;
+        Vector2 baseScreenSize = new Vector2(800, 480);
+        private Matrix globalTransformation;
+        int backbufferWidth, backbufferHeight;
+
+        //Global
+        KeyboardState keyboardState;
+        readonly ushort[] widths;
+        readonly ushort[] heights;
+        int volumeFlag = 0;
+        
+        //Meta-data for map
+        private int mapIndex = -1;
+        private Map map;
         Song song;
-        Map map;
+
+        private const int numberOfLevels = 1;
 
         public GameClass()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = false;
             widths = new ushort[] { 1920, 1366, 1280, 1280 };
             heights = new ushort[] { 1080, 768, 1024, 720 };
             IsMouseVisible = true;
@@ -35,13 +47,29 @@
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            ScalePresentationArea();
+
             song = Content.Load<Song>("Sounds/mainMelody");
             try
             {
                 MediaPlayer.Play(song);
+                MediaPlayer.Volume = 0.0f;
                 MediaPlayer.IsRepeating = true;
             }
             catch { }
+
+            LoadNextMap();
+        }
+
+        public void ScalePresentationArea()
+        {
+            //Work out how much we need to scale our graphics to fill the screen
+            backbufferWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
+            backbufferHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
+            float horScaling = backbufferWidth / baseScreenSize.X;
+            float verScaling = backbufferHeight / baseScreenSize.Y;
+            Vector3 screenScalingFactor = new Vector3(horScaling, verScaling, 1);
+            globalTransformation = Matrix.CreateScale(screenScalingFactor);
         }
 
         protected override void Update(GameTime gameTime)
@@ -49,7 +77,26 @@
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //gameManager.Update();
+            if (backbufferHeight != GraphicsDevice.PresentationParameters.BackBufferHeight ||
+                backbufferWidth != GraphicsDevice.PresentationParameters.BackBufferWidth)
+            {
+                ScalePresentationArea();
+            }
+
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.M))
+            {
+                if(volumeFlag == 0)
+                {
+                    MediaPlayer.Volume = 0.0f;
+                    volumeFlag = 1;
+                }
+                else
+                {
+                    MediaPlayer.Volume = 1.0f;
+                    volumeFlag = 0;
+                }
+            }
 
             #region Everything about changing screen resolution
             // Changing the resolution in the game + !do fullscreen / windowerd option
@@ -81,18 +128,42 @@
             }
             #endregion
             #endregion
-            
+
+            map.Update(gameTime, keyboardState);
+
             base.Update(gameTime);
+        }
+
+        private void LoadNextMap()
+        {
+            // move to the next level
+            mapIndex = (mapIndex + 1) % numberOfLevels;
+
+            // Unloads the content for the current level before loading the next one.
+            if (map != null)
+                map.Dispose();
+
+            // Load the level.
+            string levelPath = string.Format("Content/Map/{0}.txt", mapIndex);
+            using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+                map = new Map(Services, fileStream, mapIndex);
+        }
+
+        private void ReloadCurrentLevel()
+        {
+            --mapIndex;
+            LoadNextMap();
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.WhiteSmoke);
+            graphics.GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, globalTransformation);
 
-            //gameManager.Draw();
-            //map.Draw();
+            map.Draw(gameTime, spriteBatch);
+
+            //DrawHud();
 
             spriteBatch.End();
 

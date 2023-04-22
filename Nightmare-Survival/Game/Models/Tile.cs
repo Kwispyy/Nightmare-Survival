@@ -1,6 +1,6 @@
 ﻿namespace Nightmare_Survival
 {
-    enum TileCollision
+    public enum TileCollision
     {
         // A passable tile is one which does not hinder player motion at all.
         Passable = 0,
@@ -19,8 +19,8 @@
         public Texture2D Texture;
         public TileCollision Collision;
 
-        public const int Width = 34;
-        public const int Height = 34;
+        public const int Width = 32;
+        public const int Height = 32;
 
         public static readonly Vector2 Size = new Vector2(Width, Height);
 

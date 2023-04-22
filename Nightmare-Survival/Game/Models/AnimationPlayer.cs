@@ -33,9 +33,6 @@
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
         {
-            if (Animation == null)
-                throw new NotSupportedException("No animation is currently playing.");
-
             time += (float)gameTime.ElapsedGameTime.TotalSeconds;
             while (time > Animation.FrameTime)
             {
