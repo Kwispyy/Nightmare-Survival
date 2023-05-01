@@ -34,7 +34,7 @@
         {
             get { return Texture.Height; }
         }
-      
+
         public Animation(Texture2D texture, float frameTime, bool isLooping)
         {
             this.texture = texture;

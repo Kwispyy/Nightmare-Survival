@@ -2,16 +2,6 @@
 {
     public static class RectangleExtensions
     {
-        /// <summary>
-        /// Calculates the signed depth of intersection between two rectangles.
-        /// </summary>
-        /// <returns>
-        /// The amount of overlap between two intersecting rectangles. These
-        /// depth values can be negative depending on which wides the rectangles
-        /// intersect. This allows callers to determine the correct direction
-        /// to push objects in order to resolve collisions.
-        /// If the rectangles are not intersecting, Vector2.Zero is returned.
-        /// </returns>
         public static Vector2 GetIntersectionDepth(this Rectangle rectA, Rectangle rectB)
         {
             // Calculate half sizes.
@@ -40,9 +30,7 @@
             return new Vector2(depthX, depthY);
         }
 
-        /// <summary>
         /// Gets the position of the center of the bottom edge of the rectangle.
-        /// </summary>
         public static Vector2 GetBottomCenter(this Rectangle rect)
         {
             return new Vector2(rect.X + rect.Width / 2.0f, rect.Bottom);

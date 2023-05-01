@@ -14,7 +14,8 @@
         readonly ushort[] widths;
         readonly ushort[] heights;
         int volumeFlag = 0;
-        
+        private SpriteFont hudFont;
+
         //Meta-data for map
         private int mapIndex = -1;
         private Map map;
@@ -46,6 +47,8 @@
             this.Content.RootDirectory = "Content";
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            hudFont = Content.Load<SpriteFont>("Fonts/hudFont");
 
             ScalePresentationArea();
 
@@ -163,11 +166,50 @@
 
             map.Draw(gameTime, spriteBatch);
 
-            //DrawHud();
+            DrawHud();
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawHud()
+        {
+            Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
+            Vector2 hudLocation = new Vector2(titleSafeArea.X, titleSafeArea.Y);
+            Vector2 center = new Vector2(baseScreenSize.X / 2, baseScreenSize.Y / 2);
+
+            string timeString = "TIME: " + map.TimeRemaining.Minutes.ToString("00") + ":" + map.TimeRemaining.Seconds.ToString("00");
+            Color timeColor;
+            if ((int)map.TimeRemaining.TotalSeconds > 0)
+            {
+                timeColor = Color.White;
+            }
+            else
+            {
+                timeColor = Color.Green;
+            }
+            DrawShadowedString(hudFont, timeString, hudLocation, timeColor);
+
+            // Draw score
+            float timeHeight = hudFont.MeasureString(timeString).Y;
+            DrawShadowedString(hudFont, "Value: " + map.Value.ToString(), hudLocation + new Vector2(0.0f, timeHeight * 1.2f), Color.White);
+
+            // Determine the status overlay message to show.
+            Texture2D status = null;
+
+            if (status != null)
+            {
+                // Draw status message.
+                Vector2 statusSize = new Vector2(status.Width, status.Height);
+                spriteBatch.Draw(status, center - statusSize / 2, Color.White);
+            }
+        }
+
+        private void DrawShadowedString(SpriteFont font, string value, Vector2 position, Color color)
+        {
+            spriteBatch.DrawString(font, value, position + new Vector2(1.0f, 1.0f), Color.Black);
+            spriteBatch.DrawString(font, value, position, color);
         }
     }
 }

@@ -12,6 +12,9 @@
         //This tile is a "door" type of tile.
         //The player can pass through it freely, but the killer cannot and must break it.
         Door = 2,
+
+        // As long as the player is on this tile he will save currency
+        Bed = 3
     }
 
     struct Tile

@@ -13,7 +13,7 @@
 
         // TODO: Relevant to the task below
         private List<Bed> beds = new();
-        private List<Killer> killers = new();
+        //private List<Killer> killers = new();
 
         //Key location
         private Vector2 start;
@@ -46,11 +46,7 @@
             get { return content; }
         }
 
-        //private SoundEffect exitSound;
-
-        // TODO: !!!
         #region Initialize all methods for tile types
-
         public Map(IServiceProvider serviceProvider, Stream fileStream, int mapIndex)
         {
             content = new ContentManager(serviceProvider, "Content");
@@ -109,11 +105,11 @@
 
                 // Door
                 case 'D':
-                    return LoadDoorTile(x, y);
+                    return LoadDoorTile(x, y, TileCollision.Door);
 
                 // Bed
                 case 'B':
-                    return LoadBedTile(x, y, TileCollision.Passable);
+                    return LoadBedTile(x, y, TileCollision.Bed);
 
                 // Killer
                 case 'K':
@@ -159,11 +155,10 @@
             return new Tile(null, TileCollision.Passable);
         }
 
-        private Tile LoadDoorTile(int x, int y)
+        private Tile LoadDoorTile(int x, int y, TileCollision collision)
         {
-            door = GetBounds(x, y).Center;
-
-            return LoadTile("Door", TileCollision.Door);
+            Point position = GetBounds(x, y).Center;
+            return new Tile(Content.Load<Texture2D>("Tiles/door"), collision);
         }
 
         private Tile LoadBedTile(int x, int y, TileCollision collision)
@@ -177,7 +172,7 @@
         private Tile LoadKillerTile(int x, int y, string spriteSet)
         {
             Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            killers.Add(new Killer(this, position, spriteSet));
+            //killers.Add(new Killer(this, position, spriteSet));
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -216,6 +211,13 @@
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
+            timeRemaining -= gameTime.ElapsedGameTime;
+
+            if(Player.Position.X > 575 && Player.Position.X < 605 && Player.Position.Y > 280 && Player.Position.Y < 320)
+            {
+                value += 1;
+            }
+
             Player.Update(gameTime, keyboardState);
         }
 

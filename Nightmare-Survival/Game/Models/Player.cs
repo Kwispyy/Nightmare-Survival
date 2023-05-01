@@ -7,7 +7,8 @@
         private Animation runAnimation;
         private AnimationPlayer sprite;
         private SpriteEffects flip = SpriteEffects.None;
-        
+
+
         public Map Map
         {
             get { return map; }
@@ -39,7 +40,9 @@
             set { velocity = value; }
         }
 
-        private float movement;
+        private static Vector2 direction;
+        public static Vector2 Direction => direction;
+        public static bool Moving => direction != Vector2.Zero;
 
         private Rectangle localBounds;
         public Rectangle BoundingRectangle
@@ -51,6 +54,12 @@
 
                 return new Rectangle(left, top, localBounds.Width, localBounds.Height);
             }
+        }
+
+        int value;
+        public int Value
+        {
+            get { return value; }
         }
 
         public Player(Map map, Vector2 position)
@@ -85,39 +94,104 @@
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            GetInput(keyboardState);
+            GetInput(gameTime);
 
-            // Here we need to implement the physics of the player
+            ApplyPhysics(gameTime);
 
-            if(Velocity.X > 0)
-            {
-                sprite.PlayAnimation(runAnimation);
-            }
-            else
-            {
-                sprite.PlayAnimation(idleAnimation);
-            }
+            //if (Velocity.X > 0)
+            //{
+            //    sprite.PlayAnimation(runAnimation);
+            //}
+            //else
+            //{
+            //    sprite.PlayAnimation(idleAnimation);
+            //}
+
+            direction = Vector2.Zero;
+            
         }
 
-        private void GetInput(KeyboardState keyboardState)
+        private void GetInput(GameTime gameTime)
         {
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+                direction.Y--;
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+                direction.X--;
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                direction.Y++;
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+                direction.X++;
+        }
+
+        public void ApplyPhysics(GameTime gameTime)
+        {
+            velocity.X = 2.0f;
+            velocity.Y = 2.0f;
+            Vector2 previousPosition = Position;
+
+            // Apply velocity.
+            if(direction.X < 0.0f)
             {
-                movement = -1.0f;
+                flip = SpriteEffects.None;
+                position.X -= velocity.X;
             }
-            else if (keyboardState.IsKeyDown(Keys.D))
+            else if(direction.X > 0.0f)
             {
-                movement = 1.0f;
+                flip = SpriteEffects.FlipHorizontally;
+                position.X += velocity.X;
+            }
+            else if(direction.Y < 0.0f)
+            {
+                position.Y -= velocity.Y;
+            }
+            else if(direction.Y > 0.0f)
+            {
+                position.Y += velocity.Y;
+            }
+
+            HandleCollisions();
+
+            if (Position.X == previousPosition.X)
+                velocity.X = 0;
+
+            if (Position.Y == previousPosition.Y)
+                velocity.Y = 0;
+        }
+
+        private void HandleCollisions()
+        {
+            Rectangle bounds = BoundingRectangle;
+            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
+            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+            for (int y = topTile; y <= bottomTile; ++y)
+            {
+                for (int x = leftTile; x <= rightTile; ++x)
+                {
+                    TileCollision collision = Map.GetCollision(x, y);
+                    if (collision != TileCollision.Passable)
+                    {
+                        Rectangle tileBounds = Map.GetBounds(x, y);
+                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+
+                        if (collision == TileCollision.Wall)
+                        {
+                            Position = new Vector2(Position.X + depth.X, Position.Y + depth.Y);
+                        }
+
+                        if(collision == TileCollision.Bed)
+                        {
+                            value += 1;
+                        }
+                    }
+                }
             }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if(Velocity.X > 0)
-                flip = SpriteEffects.FlipHorizontally;
-            else if(Velocity.X < 0)
-                flip = SpriteEffects.None;
-
             sprite.Draw(gameTime, spriteBatch, Position, flip);
         }
     }

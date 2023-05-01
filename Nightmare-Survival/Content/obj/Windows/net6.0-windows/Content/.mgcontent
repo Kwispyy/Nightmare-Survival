@@ -4,11 +4,15 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Fonts/hudFont.spritefont</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sounds/mainMelody.mp3</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Killer/Skeleton enemy.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/animationPlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/idlePlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/runPlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/bed.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/door.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/doorOpen.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile1.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile2.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile3.png</File>
@@ -18,9 +22,13 @@
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File>Sprites/Killer/Killer.png</File>
+    <File>Sprites/Player/playerAnimation.png</File>
     <File>Sprites/Player/Idle.png</File>
     <File>Sprites/Player/Run.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>Tiles/tile0.png</File>
     <File>Tiles/tile1.png</File>

@@ -13,7 +13,7 @@
         {
             get { return frameIndex; }
         }
-        
+
         private float time;
 
         public Vector2 Origin
