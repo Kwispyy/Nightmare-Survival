@@ -1,4 +1,6 @@
-﻿namespace Nightmare_Survival
+﻿using System;
+
+namespace Nightmare_Survival
 {
     public class Player
     {
@@ -188,6 +190,11 @@
                     }
                 }
             }
+        }
+
+        public void OnKilled()
+        {
+            isAlive = false;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

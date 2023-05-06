@@ -11,12 +11,18 @@
         }
         Player player;
 
+        public Killer Killer
+        {
+            get { return killer; }
+        }
+        Killer killer;
+
         // TODO: Relevant to the task below
         private List<Bed> beds = new();
-        //private List<Killer> killers = new();
 
         //Key location
-        private Vector2 start;
+        private Vector2 playerStart;
+        private Vector2 killerStart;
         private static readonly Point InvalidPosition = new Point(-1, -1);
         private Point door = InvalidPosition;
         
@@ -113,7 +119,7 @@
 
                 // Killer
                 case 'K':
-                    return LoadKillerTile(x, y, "Killer");
+                    return LoadKillerTile(x, y);
 
                 // Player start point
                 case 'S':
@@ -149,8 +155,8 @@
             if (Player != null)
                 throw new NotSupportedException("A level may only have one starting point.");
 
-            start = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            player = new Player(this, start);
+            playerStart = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            player = new Player(this, playerStart);
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -169,10 +175,15 @@
             return new Tile(Content.Load<Texture2D>("Tiles/bed"), collision);
         }
 
-        private Tile LoadKillerTile(int x, int y, string spriteSet)
+        private Tile LoadKillerTile(int x, int y)
         {
-            Vector2 position = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            //killers.Add(new Killer(this, position, spriteSet));
+            if(Killer != null)
+            {
+                throw new NotSupportedException("A level may have killer");
+            }
+
+            killerStart = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
+            killer = new Killer(this, killerStart);
 
             return new Tile(null, TileCollision.Passable);
         }
@@ -213,18 +224,43 @@
         {
             timeRemaining -= gameTime.ElapsedGameTime;
 
+            if(!Player.IsAlive)
+            {
+                Player.Reset(playerStart);
+                value = 0;
+                timeRemaining = TimeSpan.FromMinutes(2.0);
+            }
+
             if(Player.Position.X > 575 && Player.Position.X < 605 && Player.Position.Y > 280 && Player.Position.Y < 320)
             {
                 value += 1;
             }
 
             Player.Update(gameTime, keyboardState);
+            KillerUpdate(gameTime);
+        }
+
+        public void KillerUpdate(GameTime gameTime)
+        {
+            Killer.Update(gameTime);
+
+            if (killer.BoundingRectangle.Intersects(Player.BoundingRectangle))
+            {
+                PlayerKilled();
+            }
+
+        }
+
+        private void PlayerKilled()
+        {
+            Player.OnKilled();
         }
 
         public void Draw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             DrawTiles(spriteBatch);
             Player.Draw(gameTime, spriteBatch);
+            Killer.Draw(gameTime, spriteBatch);
         }
 
         private void DrawTiles(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
