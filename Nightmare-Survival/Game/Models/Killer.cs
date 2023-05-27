@@ -7,6 +7,7 @@
         private AnimationPlayer sprite;
         private SpriteEffects flip = SpriteEffects.None;
 
+
         public Map Map
         {
             get { return map; }
@@ -27,7 +28,13 @@
             get { return velocity; }
             set { velocity = value; }
         }
-        
+
+        //bool canChasing;
+        //public bool CanChasing
+        //{
+        //    get { return canChasing; }
+        //    set { canChasing = value; }
+        //}
 
         private static Vector2 direction;
         public static Vector2 Direction => direction;
@@ -73,27 +80,16 @@
             sprite.PlayAnimation(idleAnimation);
         }
 
-        
-
         public void Update(GameTime gameTime)
         {
-            if(position.X < Map.Player.Position.X)
-            {
-                position.X += 1;
-            }
-            else if(position.X > Map.Player.Position.X)
-            {
-                position.X -= 1;
-            }
-            else if(position.Y < Map.Player.Position.Y)
-            {
-                position.Y += 1;
-            }
-            else if(position.Y > Map.Player.Position.Y)
-            {
-                position.Y -= 1;
-            }
+            Vector2 directionTo = Vector2.Normalize(Map.Player.Position - position);
+            float speed = 1.5f;
 
+            //if (canChasing)
+            //{
+                
+            //}
+            position += directionTo * speed;
             HandleCollisions();
         }
 
@@ -115,9 +111,10 @@
                         Rectangle tileBounds = Map.GetBounds(x, y);
                         Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
 
-                        if (collision == TileCollision.Wall)
+                        if (collision == TileCollision.Wall || collision == TileCollision.Door)
                         {
                             Position = new Vector2(Position.X + depth.X, Position.Y + depth.Y);
+                            //canChasing = false;
                         }
                     }
                 }

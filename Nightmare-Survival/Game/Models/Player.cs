@@ -11,6 +11,12 @@ namespace Nightmare_Survival
         private SpriteEffects flip = SpriteEffects.None;
 
 
+        private float timer; // Таймер для отслеживания времени
+
+        private const float currencyIncreaseInterval = 1f; // Интервал увеличения валюты (в секундах)
+        private const int currencyIncreaseAmount = 1; // Количество валюты, добавляемое при увеличении
+
+
         public Map Map
         {
             get { return map; }
@@ -100,6 +106,10 @@ namespace Nightmare_Survival
 
             ApplyPhysics(gameTime);
 
+            // Увеличение таймера
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
             //if (Velocity.X > 0)
             //{
             //    sprite.PlayAnimation(runAnimation);
@@ -183,9 +193,17 @@ namespace Nightmare_Survival
                             Position = new Vector2(Position.X + depth.X, Position.Y + depth.Y);
                         }
 
-                        if(collision == TileCollision.Bed)
+                        if(collision == TileCollision.Bed && Keyboard.GetState().IsKeyDown(Keys.E))
                         {
-                            value += 1;
+                            while (true)
+                            {
+                                // Если прошло достаточно времени, увеличиваем валюту
+                                if (timer >= currencyIncreaseInterval)
+                                {
+                                    Map.Value += currencyIncreaseAmount;
+                                    timer = 0f; // Сбрасываем таймер
+                                }
+                            }
                         }
                     }
                 }

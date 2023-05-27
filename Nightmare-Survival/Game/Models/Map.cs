@@ -28,11 +28,7 @@
         
         private Random random = new Random(354668);
 
-        int value;
-        public int Value
-        {
-            get { return value; }
-        }
+        public int Value;
 
         //bool reachedExit;
         //public bool ReachedExit
@@ -227,14 +223,19 @@
             if(!Player.IsAlive)
             {
                 Player.Reset(playerStart);
-                value = 0;
+                Value = 0;
                 timeRemaining = TimeSpan.FromMinutes(2.0);
             }
 
-            if(Player.Position.X > 575 && Player.Position.X < 605 && Player.Position.Y > 280 && Player.Position.Y < 320)
-            {
-                value += 1;
-            }
+
+
+            //if(Player.Position.X > 575 && Player.Position.X < 605 && Player.Position.Y > 280 && Player.Position.Y < 320)
+            //{
+            //    if(TimeRemaining.TotalSeconds % 2 == 0)
+            //    {
+            //        value += 1;
+            //    }
+            //}
 
             Player.Update(gameTime, keyboardState);
             KillerUpdate(gameTime);
