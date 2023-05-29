@@ -227,16 +227,6 @@
                 timeRemaining = TimeSpan.FromMinutes(2.0);
             }
 
-
-
-            //if(Player.Position.X > 575 && Player.Position.X < 605 && Player.Position.Y > 280 && Player.Position.Y < 320)
-            //{
-            //    if(TimeRemaining.TotalSeconds % 2 == 0)
-            //    {
-            //        value += 1;
-            //    }
-            //}
-
             Player.Update(gameTime, keyboardState);
             KillerUpdate(gameTime);
         }
@@ -249,7 +239,6 @@
             {
                 PlayerKilled();
             }
-
         }
 
         private void PlayerKilled()
@@ -257,14 +246,14 @@
             Player.OnKilled();
         }
 
-        public void Draw(GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             DrawTiles(spriteBatch);
             Player.Draw(gameTime, spriteBatch);
             Killer.Draw(gameTime, spriteBatch);
         }
 
-        private void DrawTiles(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        private void DrawTiles(SpriteBatch spriteBatch)
         {
             for (int y = 0; y < Height; ++y)
             {

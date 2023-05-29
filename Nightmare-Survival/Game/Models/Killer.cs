@@ -1,4 +1,7 @@
-﻿namespace Nightmare_Survival
+﻿using Microsoft.Xna.Framework;
+using MonoGame.Extended;
+
+namespace Nightmare_Survival
 {
     public class Killer
     {
@@ -7,6 +10,19 @@
         private AnimationPlayer sprite;
         private SpriteEffects flip = SpriteEffects.None;
 
+        // Killer data
+        private bool isHunting;
+        private bool isResting;
+        private bool canMove;
+        private int direct;
+
+        private const float killerSpeed = 70;
+
+        private bool lastHuntPhase = false;
+
+        private float timer; // A timer that determines the "hunt or calm" phases
+
+        private const float phaseDuration = 5f; // Phase duration in seconds
 
         public Map Map
         {
@@ -29,13 +45,6 @@
             set { velocity = value; }
         }
 
-        //bool canChasing;
-        //public bool CanChasing
-        //{
-        //    get { return canChasing; }
-        //    set { canChasing = value; }
-        //}
-
         private static Vector2 direction;
         public static Vector2 Direction => direction;
         public static bool Moving => direction != Vector2.Zero;
@@ -54,6 +63,10 @@
 
         public Killer(Map map, Vector2 position)
         {
+            isHunting = true;
+            isResting = false;
+            direct = 1;
+
             this.map = map;
 
             LoadContent();
@@ -82,16 +95,73 @@
 
         public void Update(GameTime gameTime)
         {
-            Vector2 directionTo = Vector2.Normalize(Map.Player.Position - position);
-            float speed = 1.5f;
+            PhaseVariation(gameTime);
 
-            //if (canChasing)
-            //{
-                
-            //}
-            position += directionTo * speed;
-            HandleCollisions();
+            //HandleCollisions();
         }
+
+        private void StartHunting()
+        {
+            isHunting = true;
+            isResting = false;
+        }
+
+        private void StartResting()
+        {
+            isHunting = false;
+            isResting = true;
+        }
+
+        private void RestPhase(GameTime gameTime)
+        {
+            position.X -= killerSpeed * direct * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (position.X <= 32 || position.X >= 768)
+            {
+                direct *= -1;
+            }
+        }
+
+        private void HuntPhase(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)
+        {
+            Vector2 directionTo = Vector2.Normalize(playerPos - killerPos);
+            position += directionTo * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        
+        private void PhaseVariation(GameTime gameTime)
+        {
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer >= phaseDuration)
+            {
+                if (lastHuntPhase)
+                {
+                    StartResting();
+                }
+                else
+                {
+                    StartHunting();
+                }
+                timer = 0f;
+            }
+
+            if (isHunting)
+            {
+                lastHuntPhase = true;
+                HuntPhase(Map.Player.Position, position, gameTime);
+            }
+
+            else if (isResting)
+            {
+                lastHuntPhase = false;
+                RestPhase(gameTime);
+            }
+        }
+
+       //private void Collisions()
+       // {
+            
+       // }
 
         private void HandleCollisions()
         {
@@ -114,7 +184,7 @@
                         if (collision == TileCollision.Wall || collision == TileCollision.Door)
                         {
                             Position = new Vector2(Position.X + depth.X, Position.Y + depth.Y);
-                            //canChasing = false;
+                            canMove = false;
                         }
                     }
                 }
@@ -124,6 +194,7 @@
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             sprite.Draw(gameTime, spriteBatch, Position, flip);
+            spriteBatch.DrawCircle(position, 10, 20, Color.Red);
         }
     }
 }

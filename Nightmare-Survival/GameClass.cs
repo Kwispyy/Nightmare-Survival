@@ -3,7 +3,7 @@
     public class GameClass : Game
     {
         //For drawing
-        private readonly GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         Vector2 baseScreenSize = new Vector2(800, 480);
         private Matrix globalTransformation;
@@ -13,6 +13,7 @@
         KeyboardState keyboardState;
         readonly ushort[] widths;
         readonly ushort[] heights;
+        private int screenWidth;
         int volumeFlag = 0;
         private SpriteFont hudFont;
 
@@ -23,9 +24,15 @@
 
         private const int numberOfLevels = 1;
 
+        public int ScreenWidth
+        {
+            get { return screenWidth; }
+        }
+
         public GameClass()
         {
             graphics = new GraphicsDeviceManager(this);
+            screenWidth = graphics.PreferredBackBufferWidth;
             graphics.IsFullScreen = false;
             widths = new ushort[] { 1920, 1366, 1280, 1280 };
             heights = new ushort[] { 1080, 768, 1024, 720 };

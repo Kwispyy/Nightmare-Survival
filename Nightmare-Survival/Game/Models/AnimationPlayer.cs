@@ -48,7 +48,7 @@
                 }
             }
 
-            Rectangle source = new(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);
+            Rectangle source = new(FrameIndex * Animation.FrameHeight, 0, Animation.Texture.Height, Animation.Texture.Height);
 
             spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
         }

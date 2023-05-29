@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MonoGame.Extended;
+using MonoGame.Extended.Shapes;
+using System;
 
 namespace Nightmare_Survival
 {
@@ -11,11 +13,10 @@ namespace Nightmare_Survival
         private SpriteEffects flip = SpriteEffects.None;
 
 
-        private float timer; // Таймер для отслеживания времени
+        private float timer; // Timer to keep track of time
 
-        private const float currencyIncreaseInterval = 1f; // Интервал увеличения валюты (в секундах)
-        private const int currencyIncreaseAmount = 1; // Количество валюты, добавляемое при увеличении
-
+        private const float currencyIncreaseInterval = 1f; // Currency increase interval (in seconds)
+        private const int currencyIncreaseAmount = 1; // Amount of currency added when increasing
 
         public Map Map
         {
@@ -40,13 +41,7 @@ namespace Nightmare_Survival
 
         private float previousBottom;
 
-        // Player speed
-        Vector2 velocity;
-        public Vector2 Velocity
-        {
-            get { return velocity; }
-            set { velocity = value; }
-        }
+        private const float playerSpeed = 70;
 
         private static Vector2 direction;
         public static Vector2 Direction => direction;
@@ -95,79 +90,56 @@ namespace Nightmare_Survival
         public void Reset(Vector2 position)
         {
             Position = position;
-            Velocity = Vector2.Zero;
             isAlive = true;
             sprite.PlayAnimation(idleAnimation);
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            GetInput(gameTime);
-
             ApplyPhysics(gameTime);
 
-            // Увеличение таймера
+            // Increasing the timer
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-
-            //if (Velocity.X > 0)
-            //{
-            //    sprite.PlayAnimation(runAnimation);
-            //}
-            //else
-            //{
-            //    sprite.PlayAnimation(idleAnimation);
-            //}
 
             direction = Vector2.Zero;
             
         }
 
-        private void GetInput(GameTime gameTime)
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-                direction.Y--;
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-                direction.X--;
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-                direction.Y++;
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-                direction.X++;
-        }
-
+        //Rewrite the controls, I want the player to be able to walk diagonally
         public void ApplyPhysics(GameTime gameTime)
         {
-            velocity.X = 2.0f;
-            velocity.Y = 2.0f;
             Vector2 previousPosition = Position;
+            KeyboardState keyboardState = Keyboard.GetState();
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Apply velocity.
-            if(direction.X < 0.0f)
+            if (keyboardState.IsKeyDown(Keys.A))
             {
-                flip = SpriteEffects.None;
-                position.X -= velocity.X;
+                position.X -= playerSpeed * delta;
+                sprite.PlayAnimation(runAnimation);
             }
-            else if(direction.X > 0.0f)
+            else if (keyboardState.IsKeyDown(Keys.D))
             {
-                flip = SpriteEffects.FlipHorizontally;
-                position.X += velocity.X;
+                position.X += playerSpeed * delta;
+                sprite.PlayAnimation(runAnimation);
             }
-            else if(direction.Y < 0.0f)
+
+            if (keyboardState.IsKeyDown(Keys.W))
             {
-                position.Y -= velocity.Y;
+                position.Y -= playerSpeed * delta;
             }
-            else if(direction.Y > 0.0f)
+            else if (keyboardState.IsKeyDown(Keys.S))
             {
-                position.Y += velocity.Y;
+                position.Y += playerSpeed * delta;
+            }
+
+            else
+            {
+                sprite.PlayAnimation(idleAnimation);
             }
 
             HandleCollisions();
-
-            if (Position.X == previousPosition.X)
-                velocity.X = 0;
-
-            if (Position.Y == previousPosition.Y)
-                velocity.Y = 0;
         }
 
         private void HandleCollisions()
@@ -195,14 +167,11 @@ namespace Nightmare_Survival
 
                         if(collision == TileCollision.Bed && Keyboard.GetState().IsKeyDown(Keys.E))
                         {
-                            while (true)
+                            // If enough time has passed, increase the currency
+                            if (timer >= currencyIncreaseInterval)
                             {
-                                // Если прошло достаточно времени, увеличиваем валюту
-                                if (timer >= currencyIncreaseInterval)
-                                {
-                                    Map.Value += currencyIncreaseAmount;
-                                    timer = 0f; // Сбрасываем таймер
-                                }
+                                Map.Value += currencyIncreaseAmount;
+                                timer = 0f; // Reset timer
                             }
                         }
                     }
@@ -218,6 +187,7 @@ namespace Nightmare_Survival
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             sprite.Draw(gameTime, spriteBatch, Position, flip);
+            
         }
     }
 }
