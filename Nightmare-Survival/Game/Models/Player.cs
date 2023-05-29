@@ -101,9 +101,16 @@ namespace Nightmare_Survival
             // Increasing the timer
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if(direction.X != 0)
+            {
+                sprite.PlayAnimation(runAnimation);
+            }
+            else
+            {
+                sprite.PlayAnimation(idleAnimation);
+            }
 
             direction = Vector2.Zero;
-            
         }
 
         //Rewrite the controls, I want the player to be able to walk diagonally
@@ -117,12 +124,14 @@ namespace Nightmare_Survival
             if (keyboardState.IsKeyDown(Keys.A))
             {
                 position.X -= playerSpeed * delta;
-                sprite.PlayAnimation(runAnimation);
+                direction = new Vector2(-1, 0);
+                flip = SpriteEffects.None;
             }
             else if (keyboardState.IsKeyDown(Keys.D))
             {
                 position.X += playerSpeed * delta;
-                sprite.PlayAnimation(runAnimation);
+                direction = new Vector2(1, 0);
+                flip = SpriteEffects.FlipHorizontally;
             }
 
             if (keyboardState.IsKeyDown(Keys.W))
@@ -132,11 +141,6 @@ namespace Nightmare_Survival
             else if (keyboardState.IsKeyDown(Keys.S))
             {
                 position.Y += playerSpeed * delta;
-            }
-
-            else
-            {
-                sprite.PlayAnimation(idleAnimation);
             }
 
             HandleCollisions();
@@ -187,7 +191,6 @@ namespace Nightmare_Survival
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             sprite.Draw(gameTime, spriteBatch, Position, flip);
-            
         }
     }
 }

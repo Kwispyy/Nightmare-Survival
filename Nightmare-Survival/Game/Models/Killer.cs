@@ -14,7 +14,7 @@ namespace Nightmare_Survival
         private bool isHunting;
         private bool isResting;
         private bool canMove;
-        private int direct;
+        private int direction;
 
         private const float killerSpeed = 70;
 
@@ -45,10 +45,6 @@ namespace Nightmare_Survival
             set { velocity = value; }
         }
 
-        private static Vector2 direction;
-        public static Vector2 Direction => direction;
-        public static bool Moving => direction != Vector2.Zero;
-
         private Rectangle localBounds;
         public Rectangle BoundingRectangle
         {
@@ -65,7 +61,7 @@ namespace Nightmare_Survival
         {
             isHunting = true;
             isResting = false;
-            direct = 1;
+            direction = 1;
 
             this.map = map;
 
@@ -114,11 +110,11 @@ namespace Nightmare_Survival
 
         private void RestPhase(GameTime gameTime)
         {
-            position.X -= killerSpeed * direct * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            position.X -= killerSpeed * direction * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (position.X <= 32 || position.X >= 768)
             {
-                direct *= -1;
+                direction *= -1;
             }
         }
 
