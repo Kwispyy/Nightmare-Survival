@@ -5,9 +5,12 @@
         //For drawing
         public GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        Vector2 baseScreenSize = new Vector2(800, 480);
+        Vector2 baseScreenSize = new(800, 480);
         private Matrix globalTransformation;
         int backbufferWidth, backbufferHeight;
+
+        //For UI !TEST
+        private UI ui;
 
         //Global
         KeyboardState keyboardState;
@@ -16,6 +19,7 @@
         private int screenWidth;
         int volumeFlag = 0;
         private SpriteFont hudFont;
+        
 
         //Meta-data for map
         private int mapIndex = -1;
@@ -59,6 +63,9 @@
 
             ScalePresentationArea();
 
+            //Create ex for ui
+            ui = new UI(spriteBatch, hudFont);
+
             song = Content.Load<Song>("Sounds/mainMelody");
             try
             {
@@ -78,7 +85,7 @@
             backbufferHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
             float horScaling = backbufferWidth / baseScreenSize.X;
             float verScaling = backbufferHeight / baseScreenSize.Y;
-            Vector3 screenScalingFactor = new Vector3(horScaling, verScaling, 1);
+            Vector3 screenScalingFactor = new(horScaling, verScaling, 1);
             globalTransformation = Matrix.CreateScale(screenScalingFactor);
         }
 
@@ -140,6 +147,9 @@
             #endregion
 
             map.Update(gameTime, keyboardState);
+
+            //Update ui... need to realize !TEST
+            ui.Update();
             
             base.Update(gameTime);
         }
@@ -183,8 +193,8 @@
         private void DrawHud()
         {
             Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
-            Vector2 hudLocation = new Vector2(titleSafeArea.X, titleSafeArea.Y);
-            Vector2 center = new Vector2(baseScreenSize.X / 2, baseScreenSize.Y / 2);
+            Vector2 hudLocation = new(titleSafeArea.X, titleSafeArea.Y);
+            Vector2 center = new(baseScreenSize.X / 2, baseScreenSize.Y / 2);
 
             string timeString = "TIME: " + map.TimeRemaining.Minutes.ToString("00") + ":" + map.TimeRemaining.Seconds.ToString("00");
             Color timeColor;
@@ -202,13 +212,16 @@
             float timeHeight = hudFont.MeasureString(timeString).Y;
             DrawShadowedString(hudFont, "Value: " + map.Value.ToString(), hudLocation + new Vector2(0.0f, timeHeight * 1.2f), Color.White);
 
+            //Draw UI with upgrades !TEST
+            ui.Draw();
+
             // Determine the status overlay message to show.
             Texture2D status = null;
 
             if (status != null)
             {
                 // Draw status message.
-                Vector2 statusSize = new Vector2(status.Width, status.Height);
+                Vector2 statusSize = new(status.Width, status.Height);
                 spriteBatch.Draw(status, center - statusSize / 2, Color.White);
             }
         }

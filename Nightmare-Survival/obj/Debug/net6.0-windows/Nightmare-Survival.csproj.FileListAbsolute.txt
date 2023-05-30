@@ -63,3 +63,4 @@ C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Tiles\doorOpen.xnb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Fonts\hudFont.xnb
 C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Killer\Idle.xnb
+C:\Users\Kwispy\Downloads\GitHub\Nightmare-Survival\Nightmare-Survival\bin\Debug\net6.0-windows\Content\Sprites\Player\Sleep.xnb

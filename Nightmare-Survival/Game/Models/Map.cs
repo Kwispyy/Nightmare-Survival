@@ -17,9 +17,6 @@
         }
         Killer killer;
 
-        // TODO: Relevant to the task below
-        private List<Bed> beds = new();
-
         //Key location
         private Vector2 playerStart;
         private Vector2 killerStart;
@@ -29,12 +26,6 @@
         private Random random = new Random(354668);
 
         public int Value;
-
-        //bool reachedExit;
-        //public bool ReachedExit
-        //{
-        //    get { return reachedExit; }
-        //}
 
         TimeSpan timeRemaining;
         public TimeSpan TimeRemaining
@@ -55,8 +46,6 @@
             timeRemaining = TimeSpan.FromMinutes(2.0);
 
             LoadTiles(fileStream);
-
-            //exitSound = Content.Load<SoundEffect>("");
         }
 
         private void LoadTiles(Stream fileStream)
@@ -91,42 +80,30 @@
                 }
             }
 
-            //if(Player == null)
-            //{
-            //    throw new NotSupportedException("Need a start point for player!");
-            //}
+            if (Player == null)
+            {
+                throw new NotSupportedException("Need a start point for player!");
+            }
         }
 
         private Tile LoadTile(char tileType, int x, int y)
         {
-            switch (tileType)
+            return tileType switch
             {
                 // Blank space
-                case '.':
-                    return LoadVarietyTile("tile", 5, TileCollision.Passable);
-
+                '.' => LoadVarietyTile("tile", 5, TileCollision.Passable),
                 // Door
-                case 'D':
-                    return LoadDoorTile(x, y, TileCollision.Door);
-
+                'D' => LoadDoorTile(x, y, TileCollision.Door),
                 // Bed
-                case 'B':
-                    return LoadBedTile(x, y, TileCollision.Bed);
-
+                'B' => LoadBedTile(x, y, TileCollision.Bed),
                 // Killer
-                case 'K':
-                    return LoadKillerTile(x, y);
-
+                'K' => LoadKillerTile(x, y),
                 // Player start point
-                case 'S':
-                    return LoadStartTile(x, y);
-
+                'S' => LoadStartTile(x, y),
                 // Wall block
-                case '#':
-                    return LoadWallTile("wall", TileCollision.Wall);
-                default:
-                    throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y));
-            }
+                '#' => LoadWallTile("wall", TileCollision.Wall),
+                _ => throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y)),
+            };
         }
 
         private Tile LoadTile(string name, TileCollision collision)
@@ -144,7 +121,6 @@
             int index = random.Next(variationCount);
             return LoadTile(baseName + index, collision);
         }
-
 
         private Tile LoadStartTile(int x, int y)
         {
@@ -166,8 +142,6 @@
         private Tile LoadBedTile(int x, int y, TileCollision collision)
         {
             Point position = GetBounds(x, y).Center;
-            beds.Add(new Bed(this, new Vector2(position.X, position.Y)));
-
             return new Tile(Content.Load<Texture2D>("Tiles/bed"), collision);
         }
 

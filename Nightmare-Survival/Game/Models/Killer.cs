@@ -13,10 +13,9 @@ namespace Nightmare_Survival
         // Killer data
         private bool isHunting;
         private bool isResting;
-        private bool canMove;
         private int direction;
 
-        private const float killerSpeed = 70;
+        private const float killerSpeed = 80;
 
         private bool lastHuntPhase = false;
 
@@ -91,9 +90,16 @@ namespace Nightmare_Survival
 
         public void Update(GameTime gameTime)
         {
+            Vector2 previousPosition = Position;
+
             PhaseVariation(gameTime);
 
-            //HandleCollisions();
+            HandleCollisions();
+
+            if (CheckCollisionWithObstacles())
+            {
+                Position = previousPosition;
+            }
         }
 
         private void StartHunting()
@@ -110,12 +116,29 @@ namespace Nightmare_Survival
 
         private void RestPhase(GameTime gameTime)
         {
-            position.X -= killerSpeed * direction * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            HandleCollisions();
+            
+            Random randomDirection = new Random();
 
-            if (position.X <= 32 || position.X >= 768)
+            int direction = randomDirection.Next(4);
+
+            switch (direction)
             {
-                direction *= -1;
+                case 0:
+                    position.X -= 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; // Смещаемся влево
+                    break;
+                case 1:
+                    position.X += 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вправо
+                    break;
+                case 2:
+                    position.Y -= 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вверх
+                    break;
+                case 3:
+                    position.Y += 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вниз
+                    break;
             }
+            
+            Vector2 sizeMap = new(map.Width * Tile.Size.X - 32, map.Height * Tile.Size.Y - 32);
         }
 
         private void HuntPhase(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)
@@ -126,6 +149,7 @@ namespace Nightmare_Survival
         
         private void PhaseVariation(GameTime gameTime)
         {
+            HandleCollisions();
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer >= phaseDuration)
@@ -154,12 +178,7 @@ namespace Nightmare_Survival
             }
         }
 
-       //private void Collisions()
-       // {
-            
-       // }
-
-        private void HandleCollisions()
+        private bool CheckCollisionWithObstacles()
         {
             Rectangle bounds = BoundingRectangle;
             int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
@@ -172,15 +191,42 @@ namespace Nightmare_Survival
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
                     TileCollision collision = Map.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
+                    if (collision == TileCollision.Wall)
                     {
                         Rectangle tileBounds = Map.GetBounds(x, y);
-                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
-
-                        if (collision == TileCollision.Wall || collision == TileCollision.Door)
+                        if (bounds.Intersects(tileBounds))
                         {
-                            Position = new Vector2(Position.X + depth.X, Position.Y + depth.Y);
-                            canMove = false;
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private void HandleCollisions()
+        {
+            Rectangle bounds = BoundingRectangle;
+            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
+            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+            Vector2 previousPosition = Position;
+
+            bool collidedWithWall = false;
+
+            for (int y = topTile; y <= bottomTile; ++y)
+            {
+                for (int x = leftTile; x <= rightTile; ++x)
+                {
+                    TileCollision collision = Map.GetCollision(x, y);
+                    if (collision != TileCollision.Passable)
+                    {
+                        if (collision == TileCollision.Wall)
+                        {
+                            collidedWithWall = true;
                         }
                     }
                 }
