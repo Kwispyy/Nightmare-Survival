@@ -6,15 +6,14 @@ namespace Nightmare_Survival
     {
         private Texture2D texture;
         private Vector2 origin;
-        private SoundEffect sleepSound;
+        private readonly SoundEffect sleepSound;
 
         public readonly int PointValue = 1;
         public readonly Color Color = Color.Red;
 
         private Vector2 basePosition;
         private float bounce;
-
-        Map map;
+        readonly Map map;
         public Map Map
         {
             get { return map; }

@@ -11,6 +11,7 @@
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/animationPlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/idlePlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/runPlayer.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Sprites/Player/sleepPlayer.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/bed.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/door.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/doorOpen.png</File>
@@ -29,6 +30,7 @@
     <File>Sprites/Player/playerAnimation.png</File>
     <File>Sprites/Player/Idle.png</File>
     <File>Sprites/Player/Run.png</File>
+    <File>Sprites/Player/Sleep.png</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
