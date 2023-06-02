@@ -21,7 +21,6 @@
         private Vector2 playerStart;
         private Vector2 killerStart;
         private static readonly Point InvalidPosition = new Point(-1, -1);
-        private Point door = InvalidPosition;
         
         private Random random = new Random(354668);
 
@@ -43,7 +42,7 @@
         public Map(IServiceProvider serviceProvider, Stream fileStream, int mapIndex)
         {
             content = new ContentManager(serviceProvider, "Content");
-            timeRemaining = TimeSpan.FromMinutes(2.0);
+            timeRemaining = TimeSpan.FromMinutes(0.1);
 
             LoadTiles(fileStream);
         }
@@ -102,6 +101,8 @@
                 'S' => LoadStartTile(x, y),
                 // Wall block
                 '#' => LoadWallTile("wall", TileCollision.Wall),
+                // Floor (wood)
+                'F' => LoadTile("wood", TileCollision.Passable),
                 _ => throw new NotSupportedException(String.Format("Unsupported tile type character '{0}' at position {1}, {2}.", tileType, x, y)),
             };
         }
@@ -113,7 +114,7 @@
 
         private Tile LoadWallTile(string name, TileCollision collision)
         {
-            return new Tile(Content.Load<Texture2D>("Tiles/wall"), collision);
+            return new Tile(Content.Load<Texture2D>("Tiles/" + name), collision);
         }
 
         private Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
@@ -201,7 +202,7 @@
                 timeRemaining = TimeSpan.FromMinutes(2.0);
             }
 
-            Player.Update(gameTime, keyboardState);
+            Player.Update(gameTime);
             KillerUpdate(gameTime);
         }
 

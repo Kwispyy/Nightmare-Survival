@@ -13,7 +13,6 @@ namespace Nightmare_Survival
         // Killer data
         private bool isHunting;
         private bool isResting;
-        private int direction;
 
         private const float killerSpeed = 80;
 
@@ -27,7 +26,8 @@ namespace Nightmare_Survival
         {
             get { return map; }
         }
-        Map map;
+
+        readonly Map map;
 
         // Killer position
         Vector2 position;
@@ -60,7 +60,6 @@ namespace Nightmare_Survival
         {
             isHunting = true;
             isResting = false;
-            direction = 1;
 
             this.map = map;
 
@@ -118,7 +117,7 @@ namespace Nightmare_Survival
         {
             HandleCollisions();
             
-            Random randomDirection = new Random();
+            Random randomDirection = new();
 
             int direction = randomDirection.Next(4);
 
@@ -137,8 +136,6 @@ namespace Nightmare_Survival
                     position.Y += 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вниз
                     break;
             }
-            
-            Vector2 sizeMap = new(map.Width * Tile.Size.X - 32, map.Height * Tile.Size.Y - 32);
         }
 
         private void HuntPhase(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)

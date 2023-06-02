@@ -111,7 +111,7 @@ namespace Nightmare_Survival
             sprite.PlayAnimation(idleAnimation);
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public void Update(GameTime gameTime)
         {
             if (isAlive)
             {

@@ -21,6 +21,8 @@
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile4.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/tile5.png</File>
     <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/wall.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/wall1.png</File>
+    <File>C:/Users/Kwispy/Downloads/GitHub/Nightmare-Survival/Nightmare-Survival/Content/Tiles/wood.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
@@ -39,6 +41,8 @@
     <File>Tiles/tile2.png</File>
     <File>Tiles/tile3.png</File>
     <File>Tiles/tile4.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

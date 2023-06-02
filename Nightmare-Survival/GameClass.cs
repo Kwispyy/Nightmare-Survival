@@ -2,6 +2,7 @@
 {
     public class GameClass : Game
     {
+        #region Basic elements
         //For drawing
         public GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -11,6 +12,30 @@
 
         //For UI !TEST
         private UI ui;
+
+        private string welcomeText = 
+            "Rules:" +
+            "\nDon't let the killer catch you!" +
+            "\nTo win the game, you must survive the timer or kill the ghost." +
+            "\nYou can save money for upgrades while lying on the bed." +
+            "\n" +
+            "\nControls:" +
+            "\nWASD - move" +
+            "\n1,2 - buttons to buy upgrades (see top right corner)" +
+            "\nF1,F2,F3,F4 - change the resolution" +
+            "\nF11/F12 - not full/full screen" +
+            "\nGood luck!" +
+            "\n" +
+            "\nPress 'E' to start." +
+            "\nESC - exit";
+
+        private string lossText = 
+            "You lost..." +
+            "\nPress 'Space' to return to the main menu.";
+
+        private string winText = 
+            "You win!" +
+            "\nPress 'Space' to return to the main menu.";
 
         //Global
         KeyboardState keyboardState;
@@ -33,6 +58,16 @@
             get { return screenWidth; }
         }
 
+        private enum GameState
+        {
+            Rules, // Print rules
+            Game, // Start game
+            Win, // Print that player is win
+            Loss, // Print that player is lost
+        }
+
+        private GameState currentState = 0;
+        #endregion
         public GameClass()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -94,13 +129,51 @@
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            KeyboardState keyboard = Keyboard.GetState();
+
+            switch (currentState)
+            {
+                case GameState.Rules:
+                    if (keyboard.IsKeyDown(Keys.E))
+                    {
+                        currentState = GameState.Game;
+                    }
+                    break;
+
+                case GameState.Game:
+                    map.Update(gameTime, keyboardState);
+                    //Update ui... need to realize !TEST
+                    ui.Update();
+
+                    if (!map.Player.IsAlive)
+                        currentState = GameState.Loss;
+
+                    if (map.TimeRemaining.TotalMinutes <= 0 && map.TimeRemaining.TotalSeconds <= 0) // Добавить, что игра выйграна, если убийца мёртв.
+                            currentState = GameState.Win;
+                    break;
+
+                case GameState.Loss:
+                    if (keyboard.IsKeyDown(Keys.Space))
+                    {
+                        ReloadCurrentLevel();
+                        currentState = GameState.Rules;
+                    }
+                    break;
+                case GameState.Win:
+                    if (keyboard.IsKeyDown(Keys.Space))
+                    {
+                        ReloadCurrentLevel();
+                        currentState = GameState.Rules;
+                    }
+                    break;
+            }
+
             if (backbufferHeight != GraphicsDevice.PresentationParameters.BackBufferHeight ||
                 backbufferWidth != GraphicsDevice.PresentationParameters.BackBufferWidth)
             {
                 ScalePresentationArea();
             }
 
-            
             if (Keyboard.GetState().IsKeyDown(Keys.M))
             {
                 if(volumeFlag == 0)
@@ -116,12 +189,9 @@
             }
 
             #region Everything about changing screen resolution
-            // Changing the resolution in the game + !do fullscreen / windowerd option
-            #region 
             Keys[] FunctionKeys = new Keys[] { Keys.F1, Keys.F2, Keys.F3, Keys.F4 };
 
             //Change between Fullscreen & windowed
-            #region
 
             if (Keyboard.GetState().IsKeyDown(Keys.F12))
             {
@@ -134,7 +204,6 @@
                 graphics.IsFullScreen = false;
                 graphics.ApplyChanges();
             }
-            #endregion
 
             for (byte i = 0; i < FunctionKeys.Length; i++)
             {
@@ -144,19 +213,13 @@
                 }
             }
             #endregion
-            #endregion
 
-            map.Update(gameTime, keyboardState);
-
-            //Update ui... need to realize !TEST
-            ui.Update();
-            
             base.Update(gameTime);
         }
 
         private void LoadNextMap()
         {
-            // move to the next level
+            // Move to the next level
             mapIndex = (mapIndex + 1) % numberOfLevels;
 
             // Unloads the content for the current level before loading the next one.
@@ -181,9 +244,22 @@
 
             spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, globalTransformation);
 
-            map.Draw(gameTime, spriteBatch);
-
-            DrawHud();
+            switch (currentState)
+            {
+                case GameState.Rules:
+                    spriteBatch.DrawString(hudFont, welcomeText, new Vector2(baseScreenSize.X / 4, baseScreenSize.Y / 4), Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+                    break;
+                case GameState.Game:
+                    map.Draw(gameTime, spriteBatch);
+                    DrawHud();
+                    break;
+                case GameState.Loss:
+                    spriteBatch.DrawString(hudFont, lossText, new Vector2(baseScreenSize.X / 2, baseScreenSize.Y / 2), Color.Red, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+                    break;
+                case GameState.Win:
+                    spriteBatch.DrawString(hudFont, winText, new Vector2(baseScreenSize.X / 2, baseScreenSize.Y / 2), Color.Green, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
+                    break;
+            }
 
             spriteBatch.End();
 
@@ -230,6 +306,15 @@
         {
             spriteBatch.DrawString(font, value, position + new Vector2(1.0f, 1.0f), Color.Black);
             spriteBatch.DrawString(font, value, position, color);
+        }
+    }
+
+    public static class Program
+    {
+        private static void Main()
+        {
+            using var game = new GameClass();
+            game.Run();
         }
     }
 }
