@@ -39,12 +39,6 @@ namespace Nightmare_Survival
             get { return isAlive; }
         }
 
-        bool canMove;
-        public bool CanMove
-        {
-            get { return canMove; }
-        }
-
         // Player position
         Vector2 position;
         public Vector2 Position
@@ -59,7 +53,6 @@ namespace Nightmare_Survival
 
         private static Vector2 direction;
         public static Vector2 Direction => direction;
-        public static bool Moving => direction != Vector2.Zero;
 
         private Rectangle localBounds;
         public Rectangle BoundingRectangle
@@ -74,10 +67,7 @@ namespace Nightmare_Survival
         }
 
         int value;
-        public int Value
-        {
-            get { return value; }
-        }
+        public int Value => value;
 
         public Player(Map map, Vector2 position)
         {
@@ -105,7 +95,6 @@ namespace Nightmare_Survival
         public void Reset(Vector2 position)
         {
             Position = position;
-            canMove = true;
             isAlive = true;
             isSleep = false;
             sprite.PlayAnimation(idleAnimation);

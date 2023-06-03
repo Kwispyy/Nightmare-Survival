@@ -7907,11 +7907,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kwispy\\Downloads\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
+      "projectUniqueName": "C:\\Users\\Kwispy\\Documents\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
       "projectName": "Nightmare-Survival",
-      "projectPath": "C:\\Users\\Kwispy\\Downloads\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
+      "projectPath": "C:\\Users\\Kwispy\\Documents\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
       "packagesPath": "C:\\Users\\Kwispy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kwispy\\Downloads\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\obj\\",
+      "outputPath": "C:\\Users\\Kwispy\\Documents\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Program Files (x86)\\Visual Studio Shared\\NuGetPackages"

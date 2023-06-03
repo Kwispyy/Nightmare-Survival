@@ -11,16 +11,15 @@ namespace Nightmare_Survival
         private SpriteEffects flip = SpriteEffects.None;
 
         // Killer data
-        private bool isHunting;
-        private bool isResting;
+        private bool collidedWithWall = false;
+
+        private Killer_FSM brain;
 
         private const float killerSpeed = 80;
 
-        private bool lastHuntPhase = false;
-
         private float timer; // A timer that determines the "hunt or calm" phases
 
-        private const float phaseDuration = 5f; // Phase duration in seconds
+        private const float PhaseDuration = 5f; // Phase duration in seconds
 
         public Map Map
         {
@@ -58,14 +57,18 @@ namespace Nightmare_Survival
 
         public Killer(Map map, Vector2 position)
         {
-            isHunting = true;
-            isResting = false;
+            Position = position;
+
+            brain = new();
+
+            brain.SetState(HuntPhase);
 
             this.map = map;
 
             LoadContent();
 
             Reset(position);
+            
         }
 
         public void LoadContent()
@@ -87,91 +90,51 @@ namespace Nightmare_Survival
             sprite.PlayAnimation(idleAnimation);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)
         {
             Vector2 previousPosition = Position;
 
-            PhaseVariation(gameTime);
-
-            HandleCollisions();
+            brain.Update(playerPos, killerPos, gameTime);
 
             if (CheckCollisionWithObstacles())
             {
                 Position = previousPosition;
+                collidedWithWall = true;
             }
         }
 
-        private void StartHunting()
+        private void RestPhase(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)
         {
-            isHunting = true;
-            isResting = false;
-        }
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        private void StartResting()
-        {
-            isHunting = false;
-            isResting = true;
-        }
-
-        private void RestPhase(GameTime gameTime)
-        {
-            HandleCollisions();
-            
-            Random randomDirection = new();
-
-            int direction = randomDirection.Next(4);
-
-            switch (direction)
+            Vector2 directionTo = Vector2.Normalize(playerPos - killerPos);
+            if(Vector2.Distance(playerPos, killerPos) < 200)
             {
-                case 0:
-                    position.X -= 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; // Смещаемся влево
-                    break;
-                case 1:
-                    position.X += 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вправо
-                    break;
-                case 2:
-                    position.Y -= 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вверх
-                    break;
-                case 3:
-                    position.Y += 1 * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; ; // Смещаемся вниз
-                    break;
+                position -= directionTo * killerSpeed * 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                position += directionTo * killerSpeed * 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if(timer > PhaseDuration)
+            {
+                brain.SetState(HuntPhase);
+                timer = 0f;
             }
         }
 
         private void HuntPhase(Vector2 playerPos, Vector2 killerPos, GameTime gameTime)
         {
-            Vector2 directionTo = Vector2.Normalize(playerPos - killerPos);
-            position += directionTo * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        
-        private void PhaseVariation(GameTime gameTime)
-        {
-            HandleCollisions();
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (timer >= phaseDuration)
+            Vector2 directionTo = Vector2.Normalize(playerPos - killerPos);
+            position += directionTo * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer >= PhaseDuration)
             {
-                if (lastHuntPhase)
-                {
-                    StartResting();
-                }
-                else
-                {
-                    StartHunting();
-                }
+                brain.SetState(RestPhase);
                 timer = 0f;
-            }
-
-            if (isHunting)
-            {
-                lastHuntPhase = true;
-                HuntPhase(Map.Player.Position, position, gameTime);
-            }
-
-            else if (isResting)
-            {
-                lastHuntPhase = false;
-                RestPhase(gameTime);
             }
         }
 
@@ -190,11 +153,7 @@ namespace Nightmare_Survival
                     TileCollision collision = Map.GetCollision(x, y);
                     if (collision == TileCollision.Wall)
                     {
-                        Rectangle tileBounds = Map.GetBounds(x, y);
-                        if (bounds.Intersects(tileBounds))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
@@ -202,38 +161,9 @@ namespace Nightmare_Survival
             return false;
         }
 
-        private void HandleCollisions()
-        {
-            Rectangle bounds = BoundingRectangle;
-            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
-            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
-
-            Vector2 previousPosition = Position;
-
-            bool collidedWithWall = false;
-
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    TileCollision collision = Map.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
-                    {
-                        if (collision == TileCollision.Wall)
-                        {
-                            collidedWithWall = true;
-                        }
-                    }
-                }
-            }
-        }
-
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             sprite.Draw(gameTime, spriteBatch, Position, flip);
-            spriteBatch.DrawCircle(position, 10, 20, Color.Red);
         }
     }
 }

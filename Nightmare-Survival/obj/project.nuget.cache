@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xJ3sYFd9mCRfgYZKbiSIPDH8/2pY/5P1D1XzdPpIsiTZLgd89T4qDE989l5O3/r5BapE/CPl6o6G66X7tDRXYg==",
+  "dgSpecHash": "nEAVOFCibjzgDl2r8IW1SLDmb4PTeTtjfEAAdv7V+sXBY7x4CeJcdhQCn+hp9vfCRlabj40uBuezgj1zDceMbQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kwispy\\Downloads\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
+  "projectFilePath": "C:\\Users\\Kwispy\\Documents\\GitHub\\Nightmare-Survival\\Nightmare-Survival\\Nightmare-Survival.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kwispy\\.nuget\\packages\\autofac\\5.2.0\\autofac.5.2.0.nupkg.sha512",
     "C:\\Users\\Kwispy\\.nuget\\packages\\libuv\\1.9.1\\libuv.1.9.1.nupkg.sha512",

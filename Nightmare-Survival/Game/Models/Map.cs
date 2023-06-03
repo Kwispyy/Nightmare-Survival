@@ -17,12 +17,19 @@
         }
         Killer killer;
 
-        //Key location
+        //Map key location
         private Vector2 playerStart;
         private Vector2 killerStart;
-        private static readonly Point InvalidPosition = new Point(-1, -1);
-        
+
         private Random random = new Random(354668);
+
+        Vector2[] points = new Vector2[]
+        {
+            new Vector2(0, 0),  // Левый верхний угол
+            new Vector2(100, 380),  // Правый верхний угол
+            new Vector2(592, 380),  // Правый нижний угол
+            new Vector2(20, 20)   // Левый нижний угол
+        };
 
         public int Value;
 
@@ -37,16 +44,14 @@
         {
             get { return content; }
         }
-
-        #region Initialize all methods for tile types
         public Map(IServiceProvider serviceProvider, Stream fileStream, int mapIndex)
         {
             content = new ContentManager(serviceProvider, "Content");
-            timeRemaining = TimeSpan.FromMinutes(0.1);
+            timeRemaining = TimeSpan.FromMinutes(0.5);
 
             LoadTiles(fileStream);
         }
-
+        #region Initialize all methods for tile types
         private void LoadTiles(Stream fileStream)
         {
             // Load the level and ensure all of the lines are the same length.
@@ -208,7 +213,7 @@
 
         public void KillerUpdate(GameTime gameTime)
         {
-            Killer.Update(gameTime);
+            Killer.Update(Player.Position, killer.Position, gameTime);
 
             if (killer.BoundingRectangle.Intersects(Player.BoundingRectangle))
             {
