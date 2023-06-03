@@ -17,9 +17,13 @@ namespace Nightmare_Survival
 
         private const float killerSpeed = 80;
 
+        private const int impactForce = 1;
+
         private float timer; // A timer that determines the "hunt or calm" phases
 
-        private const float PhaseDuration = 10f; // Phase duration in seconds
+        private const float HuntPhaseDuration = 30f;
+
+        private const float RestPhaseDuration = 10f;
 
         int health;
         public int GetKillerHealth => health;
@@ -126,7 +130,7 @@ namespace Nightmare_Survival
                 position += directionTo * killerSpeed * 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if(timer > PhaseDuration)
+            if(timer > RestPhaseDuration)
             {
                 brain.SetState(HuntPhase);
                 timer = 0f;
@@ -140,11 +144,14 @@ namespace Nightmare_Survival
             Vector2 directionTo = Vector2.Normalize(playerPos - killerPos);
             position += directionTo * killerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (timer >= PhaseDuration)
+            if (timer >= HuntPhaseDuration)
             {
                 brain.SetState(RestPhase);
                 timer = 0f;
             }
+
+            map.Door.TakeDamage(impactForce, gameTime);
+
         }
 
         private bool CheckCollisionWithObstacles()
@@ -160,7 +167,7 @@ namespace Nightmare_Survival
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
                     TileCollision collision = Map.GetCollision(x, y);
-                    if (collision == TileCollision.Wall)
+                    if (collision == TileCollision.Wall || collision == TileCollision.Door)
                     {
                         return true;
                     }

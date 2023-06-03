@@ -147,7 +147,7 @@
                     //Update ui... need to realize !TEST
                     ui.Update();
 
-                    if (!map.Player.IsAlive)
+                    if (!map.Player.IsAlive || map.Door.doorIsBroken)
                         currentState = GameState.Loss;
 
                     if (map.TimeRemaining.TotalMinutes <= 0 && map.TimeRemaining.TotalSeconds <= 0) // Добавить, что игра выйграна, если убийца мёртв.
@@ -295,7 +295,7 @@
 
             //Draw HP Killer and Door
             spriteBatch.DrawString(hudFont, map.Killer.GetKillerHealth.ToString() + "/" + map.Killer.GetMaxKillerHealth.ToString(), new Vector2(map.Killer.Position.X-12, map.Killer.Position.Y-46), Color.White, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(hudFont, map.Door.DoorHealth.ToString() + "/" + map.Door.MaxDoorHealth.ToString(), new Vector2(map.Door.DoorPosition.X - 12, map.Door.DoorPosition.Y - 28), Color.White, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(hudFont, map.Door.doorHealth.ToString() + "/" + map.Door.MaxDoorHealth.ToString(), new Vector2(map.Door.DoorPointPosition.X - 12, map.Door.DoorPointPosition.Y - 28), Color.White, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
 
             // Determine the status overlay message to show.
             Texture2D status = null;

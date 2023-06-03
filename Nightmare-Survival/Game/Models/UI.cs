@@ -13,8 +13,8 @@
 
             upgrades = new List<Upgrade>
             {
-                new Upgrade("Upgrade bed LVL1", 10),
-                new Upgrade("Updgrade bed LVL2", 20),
+                new Upgrade("Upgrade to Stone door", 40),
+                new Upgrade("Upgrade to Iron door", 100),
             };
         }
 

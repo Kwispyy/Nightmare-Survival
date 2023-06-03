@@ -69,7 +69,7 @@
 
             
 
-            timeRemaining = TimeSpan.FromMinutes(0.5);
+            timeRemaining = TimeSpan.FromMinutes(5.0);
 
             LoadTiles(fileStream);
         }
@@ -187,7 +187,8 @@
         {
             string doorTexture = doorTextures[doorLevel];
 
-            Door.DoorPosition = GetBounds(x, y).Center;
+            Door.DoorPointPosition = GetBounds(x, y).Center;
+            Door.DoorPosition = new Vector2(x, y);
 
             return new Tile(Content.Load<Texture2D>("Tiles/"+doorTexture), collision);
         }
@@ -253,15 +254,24 @@
                 timeRemaining = TimeSpan.FromMinutes(2.0);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.U) && canUpgradeDoor)
+            if(Value >= door.MaterialCost[doorMaterial])
             {
-                UpgradeDoor();
-                canUpgradeDoor = false;
+                if (Keyboard.GetState().IsKeyDown(Keys.U) && canUpgradeDoor)
+                {
+                    Value -= door.MaterialCost[doorMaterial];
+                    UpgradeDoor();
+                    canUpgradeDoor = false;
+                }
+
+                if (Keyboard.GetState().IsKeyUp(Keys.U))
+                {
+                    canUpgradeDoor = true;
+                }
             }
 
-            if (Keyboard.GetState().IsKeyUp(Keys.U))
+            else
             {
-                canUpgradeDoor = true;
+                //
             }
 
             Player.Update(gameTime);
