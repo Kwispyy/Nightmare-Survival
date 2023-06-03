@@ -19,7 +19,13 @@ namespace Nightmare_Survival
 
         private float timer; // A timer that determines the "hunt or calm" phases
 
-        private const float PhaseDuration = 5f; // Phase duration in seconds
+        private const float PhaseDuration = 10f; // Phase duration in seconds
+
+        int health;
+        public int GetKillerHealth => health;
+
+        int maxHealth;
+        public int GetMaxKillerHealth => maxHealth;
 
         public Map Map
         {
@@ -57,6 +63,9 @@ namespace Nightmare_Survival
 
         public Killer(Map map, Vector2 position)
         {
+            maxHealth = 100;
+            health = maxHealth;
+
             Position = position;
 
             brain = new();

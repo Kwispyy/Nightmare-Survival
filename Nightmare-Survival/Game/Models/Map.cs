@@ -5,6 +5,20 @@
         //Struct on the map
         private Tile[,] tiles;
 
+        private bool canUpgradeDoor;
+
+        private Bed bed;
+        
+        Door door;
+        public Door Door
+        {
+            get { return door; }
+        }
+
+        private string[] doorTextures;
+        private int doorLevel;
+        private DoorMaterial doorMaterial;
+
         public Player Player
         {
             get { return player; }
@@ -23,14 +37,6 @@
 
         private Random random = new Random(354668);
 
-        Vector2[] points = new Vector2[]
-        {
-            new Vector2(0, 0),  // Левый верхний угол
-            new Vector2(100, 380),  // Правый верхний угол
-            new Vector2(592, 380),  // Правый нижний угол
-            new Vector2(20, 20)   // Левый нижний угол
-        };
-
         public int Value;
 
         TimeSpan timeRemaining;
@@ -47,10 +53,48 @@
         public Map(IServiceProvider serviceProvider, Stream fileStream, int mapIndex)
         {
             content = new ContentManager(serviceProvider, "Content");
+            canUpgradeDoor = true;
+            this.bed = new(this);
+            
+            doorLevel = 0;
+
+            doorMaterial = DoorMaterial.Wood;
+
+            door = new Door(doorMaterial);
+
+            doorTextures = new string[3];
+            doorTextures[0] = "door1";
+            doorTextures[1] = "door2";
+            doorTextures[2] = "door3";
+
+            
+
             timeRemaining = TimeSpan.FromMinutes(0.5);
 
             LoadTiles(fileStream);
         }
+
+        private void UpgradeDoor()
+        {
+            if (doorLevel < 3)
+            {
+                door.Upgrade();
+                doorLevel++;
+                string doorTexture = doorTextures[doorLevel];
+
+                for (int y = 0; y < Height; ++y)
+                {
+                    for (int x = 0; x < Width; ++x)
+                    {
+                        if (tiles[x, y].Collision == TileCollision.Door)
+                        {
+                            tiles[x, y].Texture = Content.Load<Texture2D>("Tiles/" + doorTexture);
+                        }
+                    }
+                }
+            }
+        }
+
         #region Initialize all methods for tile types
         private void LoadTiles(Stream fileStream)
         {
@@ -99,7 +143,7 @@
                 // Door
                 'D' => LoadDoorTile(x, y, TileCollision.Door),
                 // Bed
-                'B' => LoadBedTile(x, y, TileCollision.Bed),
+                'B' => LoadBedTile(TileCollision.Bed),
                 // Killer
                 'K' => LoadKillerTile(x, y),
                 // Player start point
@@ -141,13 +185,15 @@
 
         private Tile LoadDoorTile(int x, int y, TileCollision collision)
         {
-            Point position = GetBounds(x, y).Center;
-            return new Tile(Content.Load<Texture2D>("Tiles/door"), collision);
+            string doorTexture = doorTextures[doorLevel];
+
+            Door.DoorPosition = GetBounds(x, y).Center;
+
+            return new Tile(Content.Load<Texture2D>("Tiles/"+doorTexture), collision);
         }
 
-        private Tile LoadBedTile(int x, int y, TileCollision collision)
+        private Tile LoadBedTile(TileCollision collision)
         {
-            Point position = GetBounds(x, y).Center;
             return new Tile(Content.Load<Texture2D>("Tiles/bed"), collision);
         }
 
@@ -207,9 +253,22 @@
                 timeRemaining = TimeSpan.FromMinutes(2.0);
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.U) && canUpgradeDoor)
+            {
+                UpgradeDoor();
+                canUpgradeDoor = false;
+            }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.U))
+            {
+                canUpgradeDoor = true;
+            }
+
             Player.Update(gameTime);
             KillerUpdate(gameTime);
         }
+
+
 
         public void KillerUpdate(GameTime gameTime)
         {
